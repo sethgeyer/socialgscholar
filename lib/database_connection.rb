@@ -24,7 +24,7 @@ class DatabaseConnection
   end
 
   def sql(sql_string)
-    connection.exec(sql_string).to_a
+    connection.execute(sql_string).to_a
   end
 
   def close
@@ -40,10 +40,10 @@ class DatabaseConnection
       :database => config['database'],
       :username => config['username'],
       :password => config['password']
-    ).connection.raw_connection
+    ).connection
   end
 
   def establish_from_uri(uri)
-    ActiveRecord::Base.establish_connection(uri).connection.raw_connection
+    ActiveRecord::Base.establish_connection(uri).connection
   end
 end

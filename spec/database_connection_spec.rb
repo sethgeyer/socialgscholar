@@ -1,7 +1,6 @@
 describe DatabaseConnection do
   describe "with a DATABASE_URL" do
     it "establishes a connection based on the DATABASE_URL" do
-      skip("I can't get this to play nicely")
       test_config = YAML.load(File.read("config/database.yml"))["test"]
 
       old_database_url = ENV["DATABASE_URL"]
