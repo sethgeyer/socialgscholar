@@ -12,6 +12,7 @@ feature "homepage" do
   scenario "visitor sees the login form" do
     expect(page).to have_button("Login")
     expect(page).not_to have_link("Logout")
+
   end
 
   scenario "visitor sees 'All Stats' summary" do
@@ -39,6 +40,18 @@ feature "homepage" do
     #user_logs_in("Seth")
     click_on "Logout"
     expect(page).to have_link("Signup")
+  end
+
+  scenario "user logs in and can see the Log Activity link" do
+    expect(page).not_to have_link("Log Activity")
+    register_and_log_in("Seth")
+    expect(page).to have_link("Log Activity")
+  end
+
+  scenario "logged in user presses 'Log Activity' link and routes to input form" do
+    register_and_log_in("Seth")
+    click_on "Log Activity"
+    expect(page).to have_button("Submit")
   end
 
 end

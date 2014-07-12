@@ -1,17 +1,17 @@
 <%if session[:user_id]%>
-  <a href="logout">Logout</a>
-ID: <%=session[:user_id]%>
-  <h4>Your Stats</h4>
-
+  <a href="logout">Logout</a><br>
+  <h4>Your Stats</h4><br>
+  <a href="scores/new">Log Activity</a>
 <%else%>
 
-  <a href="/users/new">Signup</a> |
+
+  <a href="/users/new">Signup</a>
 
   <form method="POST" action="/login">
-    <label for="username">Username:</label><br>
-    <input id="username" name="username"><br><br>
-    <label for="password">Password:</label><br>
-    <input id="password" name="password"><br><br>
+    <label for="username">Username:</label>
+    <input id="username" name="username">
+    <label for="password">Password:</label>
+    <input id="password" name="password">
     <button>Login</button>
   </form>
 <%end%>
@@ -19,5 +19,9 @@ ID: <%=session[:user_id]%>
 
 <h4>Leaderboard</h4>
 
+<%all_scores.each do |person|%>
+<%=person["user_id"]%> -
+<%=person["sum"]%>
+<%end%>
 
 

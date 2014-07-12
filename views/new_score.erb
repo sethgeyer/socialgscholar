@@ -1,0 +1,28 @@
+<form action="/scores" method="post">
+
+  <label for="date">Date of Activity:</label>
+  <input id="date" type="date" name="activity_date" value = <%=Time.now%> >
+
+  <div id="bev_button">
+    <h4>Enjoyed a Beverage</h4>
+    <input type="radio" name="radio_beverage" id="bev_no" value="0" checked="checked"/>
+    <label for="bev_no">Nope</label>
+    <br>
+    <input type="radio" name="radio_beverage" id="bev_in_gschool" value="1">
+    <label for="bev_in_gschool">In gSchool Classroom <i>(+1)</i></label>
+    <br>
+    <input type="radio" name="radio_beverage" id="bev_at_gather" value="2">
+    <label for="bev_at_gather">At Gather <i>(+2)</i></label>
+    <br>
+    <input type="radio" name="radio_beverage" id="bev_at_gather_with_stranger" value="4">
+    <label for="bev_at_gather_with_stranger">At Gather w/ a Stranger <i>(+4)</i></label>
+    <br>
+    <input type="radio" name="radio_beverage" id="bev_drank_too_much" value= -5>
+    <label for="bev_drank_too_much">Drank Too Much and Made a Jack-Ass of Myself <i>(-5)</i></label>
+    <br>
+    <br><br>
+  </div>
+
+
+  <button>Submit</button>
+</form>

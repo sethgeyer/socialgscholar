@@ -14,7 +14,27 @@ class App < Sinatra::Application
   end
 
   get "/" do
-    erb :home
+    all_scores = @database_connection.sql("SELECT scores.user_id, SUM(scores.beverage) from scores GROUP BY scores.user_id")
+    erb :home, locals: {all_scores: all_scores}
+  end
+
+  get "/scores/new" do
+    if session[:user_id]
+      erb :new_score
+    else
+      redirect "/"
+    end
+  end
+
+  post "/scores" do
+    activity_date = params[:activity_date]
+    beverage_score = params[:radio_beverage].to_i
+    if @database_connection.sql("SELECT * FROM scores WHERE user_id = #{session[:user_id].to_i} AND activity_date = '#{activity_date}'") != []
+      @database_connection.sql("UPDATE scores SET beverage= #{beverage_score} WHERE user_id = #{session[:user_id].to_i} AND activity_date = '#{activity_date}'")
+    else
+      @database_connection.sql("INSERT INTO scores (user_id, activity_date, beverage) VALUES (#{session[:user_id].to_i}, '#{activity_date}', #{beverage_score})")
+    end
+    redirect "/"
   end
 
   get '/logout' do
