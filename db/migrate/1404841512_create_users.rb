@@ -4,7 +4,12 @@ class CreateUsers < ActiveRecord::Migration
       t.string :username
       t.string :password
     end
+
+    add_index :users, :username, unique: true
+
   end
+
+
 
   def down
     drop_table :users

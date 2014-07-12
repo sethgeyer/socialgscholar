@@ -1,0 +1,23 @@
+<%if session[:user_id]%>
+  <a href="logout">Logout</a>
+ID: <%=session[:user_id]%>
+  <h4>Your Stats</h4>
+
+<%else%>
+
+  <a href="/users/new">Signup</a> |
+
+  <form method="POST" action="/login">
+    <label for="username">Username:</label><br>
+    <input id="username" name="username"><br><br>
+    <label for="password">Password:</label><br>
+    <input id="password" name="password"><br><br>
+    <button>Login</button>
+  </form>
+<%end%>
+
+
+<h4>Leaderboard</h4>
+
+
+

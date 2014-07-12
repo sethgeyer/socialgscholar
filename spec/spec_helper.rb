@@ -18,3 +18,17 @@ RSpec.configure do |config|
     database_connection.sql("ROLLBACK")
   end
 end
+
+
+def  register_and_log_in(name)
+  visit "/users/new"
+  fill_in "Username", with: "#{name}"
+  fill_in "Password", with: "#{name.downcase}"
+  click_on "Submit"
+end
+
+def user_logs_in(name)
+  fill_in "Username", with: "#{name}"
+  fill_in "Password", with: "#{name.downcase}"
+  click_on "Login"
+end
