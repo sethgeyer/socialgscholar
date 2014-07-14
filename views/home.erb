@@ -22,21 +22,23 @@
 
 <table >
   <tr>
-    <th> ID </th>
     <th> Name </th>
-    <th> Beers </th>
+    <th> Beer </th>
     <th> Pong </th>
     <th> Network</th>
     <th> Learning</th>
+    <th> Code</th>
+    <th> Total</th>
   </tr>
 <%all_scores.each do |person|%>
   <tr>
-    <td><%=person["id"]%></td>
     <td><%=person["username"]%></td>
     <td id="beer"><%=person["beer"]%></td>
     <td id="pong"><%=person["pong"]%></td>
     <td id="network"><%=person["network"]%></td>
     <td id="learning"><%=person["learning"]%></td>
+    <td id="badass_code"><%=person["code"]%></td>
+    <td id ="total_score"><%=person["total_score"]%></td>
   </tr>
 <%end%>
 

@@ -18,14 +18,18 @@ class App < Sinatra::Application
                   SELECT users.id, users.username,
                     SUM(scores.beverage) AS beer,
                     SUM(scores.pong) AS pong,
-                    SUM(scores.network) AS network
+                    SUM(scores.network) AS network,
+                    SUM(scores.learning) AS learning,
+                    SUM(scores.badass_code) AS code,
+                    SUM(scores.total_score) AS total_score
                   FROM scores
                   JOIN users
                   ON scores.user_id = users.id
                   GROUP BY users.id
-                  ORDER BY SUM(scores.beverage) DESC
+                  ORDER BY SUM(scores.total_score) DESC
                   STRING
     all_scores = @database_connection.sql(sql_string)
+
     erb :home, locals: {all_scores: all_scores}
   end
 
@@ -43,11 +47,14 @@ class App < Sinatra::Application
     beverage_score = params[:radio_beverage].to_i
     pong_score = params[:radio_pong].to_i
     network_score = params[:radio_network].to_i
-    determine_whether_to_create_a_new_score_or_update_an_existing_score(activity_date, beverage_score, pong_score, network_score)
+    learning_score = params[:radio_learning].to_i
+    badass_code_score = params[:radio_badass].to_i
+    total_score = beverage_score + pong_score + network_score + learning_score + badass_code_score
+    determine_whether_to_create_a_new_score_or_update_an_existing_score(activity_date, beverage_score, pong_score, network_score, learning_score, badass_code_score, total_score)
     redirect "/"
   end
 
-  get '/logout' do
+  get "/logout" do
     session.delete(:user_id)
     redirect "/"
   end

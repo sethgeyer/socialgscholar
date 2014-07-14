@@ -6,6 +6,7 @@ feature "registration page" do
     expect(page).to have_button("Submit")
     expect(page).to have_content("Username")
     expect(page).to have_content("Password")
+    expect(page).to have_content("Image URL")
   end
 
   scenario "visitor fills in form to create an account" do

@@ -23,10 +23,31 @@ rescue
   redirect '/users/new'
 end
 
-def determine_whether_to_create_a_new_score_or_update_an_existing_score(activity_date, beverage_score, pong_score, network_score)
+def determine_whether_to_create_a_new_score_or_update_an_existing_score(activity_date, beverage_score, pong_score, network_score, learning_score, badass_code_score, total_score)
   if @database_connection.sql("SELECT * FROM scores WHERE user_id = #{session[:user_id].to_i} AND activity_date = '#{activity_date}'") != []
-    @database_connection.sql("UPDATE scores SET beverage= #{beverage_score}, pong= #{pong_score}, network=#{network_score} WHERE user_id = #{session[:user_id].to_i} AND activity_date = '#{activity_date}'")
+    update_sql_string = <<-TEXT
+                            UPDATE scores
+                            SET beverage= #{beverage_score},
+                                pong= #{pong_score},
+                                network=#{network_score},
+                                learning=#{learning_score},
+                                badass_code=#{badass_code_score},
+                                total_score=#{total_score}
+                            WHERE user_id = #{session[:user_id].to_i} AND activity_date = '#{activity_date}'
+                          TEXT
+    @database_connection.sql(update_sql_string)
   else
-    @database_connection.sql("INSERT INTO scores (user_id, activity_date, beverage, pong, network) VALUES (#{session[:user_id].to_i}, '#{activity_date}', #{beverage_score}, #{pong_score}, #{network_score} )")
+    create_sql_string = <<-TEXT
+                            INSERT INTO scores (user_id, activity_date, beverage, pong, network, learning, badass_code, total_score)
+                            VALUES (#{session[:user_id].to_i},
+                                   '#{activity_date}',
+                                    #{beverage_score},
+                                    #{pong_score},
+                                    #{network_score},
+                                    #{learning_score},
+                                    #{badass_code_score},
+                                    #{total_score})
+    TEXT
+    @database_connection.sql(create_sql_string)
   end
 end
