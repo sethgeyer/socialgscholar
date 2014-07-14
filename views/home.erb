@@ -1,7 +1,8 @@
 <%if session[:user_id]%>
-  <a href="logout">Logout</a><br>
-  <h4>Your Stats</h4><br>
+  <img style="width:60px" src=<%=user["image_url"]%>>
+  <a href="logout">Logout</a> &nbsp;&nbsp; | &nbsp;&nbsp;
   <a href="scores/new">Log Activity</a>
+  <br><br>
 <%else%>
 
 
@@ -16,9 +17,18 @@
   </form>
 <%end%>
 
+<h3>Ruler of the gSchoolers</h3>
+<thumbnail style="border:1px solid">The King of Ping</thumbnail>
+<thumbnail style="border:1px solid">The Sir of Suds</thumbnail>
+<thumbnail style="border:1px solid">The Network Baron</thumbnail>
+<thumbnail style="border:1px solid">The Earl of Learning</thumbnail>
+<thumbnail style="border:1px solid">The Queen of Code</thumbnail>
+
+
 
 <div id="leaderboard">
-<h4>Leaderboard</h4>
+<hr />
+<h3>Leaderboard</h3>
 
 <table >
   <tr>

@@ -14,8 +14,8 @@ def create_appropriate_error_message(username, password)
   end
 end
 
-def add_user_to_database(username, password)
-  @database_connection.sql("INSERT INTO users (username, password) VALUES ('#{username}', '#{password}')")
+def add_user_to_database(username, password, image_url=nil)
+  @database_connection.sql("INSERT INTO users (username, password, image_url) VALUES ('#{username}', '#{password}', '#{image_url}')")
   establish_current_user_and_create_session(params[:username], params[:password])
   redirect "/"
 rescue

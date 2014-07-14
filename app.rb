@@ -29,8 +29,9 @@ class App < Sinatra::Application
                   ORDER BY SUM(scores.total_score) DESC
                   STRING
     all_scores = @database_connection.sql(sql_string)
+    user = @database_connection.sql("SELECT * FROM users WHERE id = #{session[:user_id].to_i}").first if session[:user_id]
 
-    erb :home, locals: {all_scores: all_scores}
+    erb :home, locals: {all_scores: all_scores, user: user}
   end
 
   get "/scores/new" do
@@ -73,7 +74,7 @@ class App < Sinatra::Application
       flash[:notice] = create_appropriate_error_message(params[:username], params[:password])
       redirect '/users/new'
     else
-      add_user_to_database(params[:username], params[:password])
+      add_user_to_database(params[:username], params[:password], params[:image_url])
     end
   end
 end
