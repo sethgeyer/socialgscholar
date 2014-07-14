@@ -32,3 +32,10 @@ def user_logs_in(name)
   fill_in "Password", with: "#{name.downcase}"
   click_on "Login"
 end
+
+def make_a_choice_by_pressing_a_radio_button(form_section, radio_button, date)
+  visit "scores/new"
+  select date, from: "Date of Activity"
+  within(page.find(form_section)) { choose radio_button }
+  click_on("Submit")
+end

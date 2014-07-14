@@ -3,6 +3,8 @@ class AddAScoresTable < ActiveRecord::Migration
       create_table :scores do |t|
         t.integer :user_id
         t.integer :beverage
+        t.integer :pong
+        t.integer :network
         t.string  :activity_date
         t.integer :total_score
 

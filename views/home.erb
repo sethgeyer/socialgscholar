@@ -17,11 +17,29 @@
 <%end%>
 
 
+<div id="leaderboard">
 <h4>Leaderboard</h4>
 
+<table >
+  <tr>
+    <th> ID </th>
+    <th> Name </th>
+    <th> Beers </th>
+    <th> Pong </th>
+    <th> Network</th>
+    <th> Learning</th>
+  </tr>
 <%all_scores.each do |person|%>
-<%=person["user_id"]%> -
-<%=person["sum"]%>
+  <tr>
+    <td><%=person["id"]%></td>
+    <td><%=person["username"]%></td>
+    <td id="beer"><%=person["beer"]%></td>
+    <td id="pong"><%=person["pong"]%></td>
+    <td id="network"><%=person["network"]%></td>
+    <td id="learning"><%=person["learning"]%></td>
+  </tr>
 <%end%>
 
+</table>
 
+</div>

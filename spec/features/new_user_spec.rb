@@ -46,7 +46,11 @@ feature "registration page" do
     expect(page).to have_content("Username is already taken")
   end
 
-
+  scenario "visitor decides not to register" do
+    visit "/users/new"
+    click_on "Cancel"
+    expect(page).to have_content("Leaderboard")
+  end
 
 
 end

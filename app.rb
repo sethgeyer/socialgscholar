@@ -14,13 +14,25 @@ class App < Sinatra::Application
   end
 
   get "/" do
-    all_scores = @database_connection.sql("SELECT scores.user_id, SUM(scores.beverage) from scores GROUP BY scores.user_id")
+    sql_string = <<-STRING
+                  SELECT users.id, users.username,
+                    SUM(scores.beverage) AS beer,
+                    SUM(scores.pong) AS pong,
+                    SUM(scores.network) AS network
+                  FROM scores
+                  JOIN users
+                  ON scores.user_id = users.id
+                  GROUP BY users.id
+                  ORDER BY SUM(scores.beverage) DESC
+                  STRING
+    all_scores = @database_connection.sql(sql_string)
     erb :home, locals: {all_scores: all_scores}
   end
 
   get "/scores/new" do
     if session[:user_id]
-      erb :new_score
+      last_three_days = [Time.now.strftime("%m/%d/%Y"), (Time.now - 86400).strftime("%m/%d/%Y"), (Time.now - 86400 - 86400).strftime("%m/%d/%Y")]
+      erb :new_score, :locals => {dates: last_three_days}
     else
       redirect "/"
     end
@@ -29,11 +41,9 @@ class App < Sinatra::Application
   post "/scores" do
     activity_date = params[:activity_date]
     beverage_score = params[:radio_beverage].to_i
-    if @database_connection.sql("SELECT * FROM scores WHERE user_id = #{session[:user_id].to_i} AND activity_date = '#{activity_date}'") != []
-      @database_connection.sql("UPDATE scores SET beverage= #{beverage_score} WHERE user_id = #{session[:user_id].to_i} AND activity_date = '#{activity_date}'")
-    else
-      @database_connection.sql("INSERT INTO scores (user_id, activity_date, beverage) VALUES (#{session[:user_id].to_i}, '#{activity_date}', #{beverage_score})")
-    end
+    pong_score = params[:radio_pong].to_i
+    network_score = params[:radio_network].to_i
+    determine_whether_to_create_a_new_score_or_update_an_existing_score(activity_date, beverage_score, pong_score, network_score)
     redirect "/"
   end
 

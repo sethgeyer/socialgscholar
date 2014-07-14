@@ -1,28 +1,126 @@
 <form action="/scores" method="post">
 
   <label for="date">Date of Activity:</label>
-  <input id="date" type="date" name="activity_date" value = <%=Time.now%> >
+  <!--<input id="date" type="date" name="activity_date" >-->
+
+  <select id="date" name="activity_date">
+    <option selected="selected"><%=dates[0]%></option>
+    <option><%=dates[1]%></option>
+    <option><%=dates[2]%></option>
+  </select>
+
+
+
 
   <div id="bev_button">
-    <h4>Enjoyed a Beverage</h4>
-    <input type="radio" name="radio_beverage" id="bev_no" value="0" checked="checked"/>
-    <label for="bev_no">Nope</label>
-    <br>
-    <input type="radio" name="radio_beverage" id="bev_in_gschool" value="1">
-    <label for="bev_in_gschool">In gSchool Classroom <i>(+1)</i></label>
-    <br>
+    <h3>Enjoyed a Beverage</h3>
+
     <input type="radio" name="radio_beverage" id="bev_at_gather" value="2">
-    <label for="bev_at_gather">At Gather <i>(+2)</i></label>
+    <label for="bev_at_gather">At Gather (Classroom cocktails do not count) <i>(+2)</i></label>
     <br>
     <input type="radio" name="radio_beverage" id="bev_at_gather_with_stranger" value="4">
     <label for="bev_at_gather_with_stranger">At Gather w/ a Stranger <i>(+4)</i></label>
     <br>
+    <input type="radio" name="radio_beverage" id="bev_no" value="0" checked="checked">
+    <label for="bev_no">Nope</label>
+    <br>
     <input type="radio" name="radio_beverage" id="bev_drank_too_much" value= -5>
     <label for="bev_drank_too_much">Drank Too Much and Made a Jack-Ass of Myself <i>(-5)</i></label>
     <br>
-    <br><br>
+    <hr />
+  </div>
+
+  <div id="pong_button">
+    <h3>Played Ping-Pong (or some other game)</h3>
+
+    <div><b>In gSchool with a:</b><br>
+      <input type="radio" name="radio_pong" id="pong_in_GS_with_student" value="1">
+      <label for="pong_in_GS_with_student">gSchooler (student or instructor) <i>(+1)</i></label>
+      <input type="radio" name="radio_pong" id="pong_in_GS_with_non_student" value="3">
+      <label for="pong_in_GS_with_non_student">Non-gSchooler <i>(+3)</i> </label>
+      <input type="radio" name="radio_pong" id="pong_in_GS_with_stranger" value="5">
+      <label for="pong_in_GS_with_Stranger">Stranger <i> (+5)</i></label>
+    </div>
+    <div><b>At Gather with a:</b><br>
+      <input type="radio" name="radio_pong" id="pong_in_gather_with_student" value="2">
+      <label for="pong_in_gather_with_student">gSchooler<i> (+2)</i></label>
+      <input type="radio" name="radio_pong" id="pong_in_gather_with_non_student" value="4">
+      <label for="pong_in_gather_with_non_student">Non-gSchooler <i>(+4)</i> </label>
+      <input type="radio" name="radio_pong" id="pong_in_gather_with_stranger" value="6">
+      <label for="pong_in_gather_with_Stranger">Stranger <i>(+6)</i> </label>
+      <br>
+      <input type="radio" name="radio_pong" id="pong_no" value="0" checked="checked">
+      <label for="pong_no">Nope</label>
+      <br>
+      <hr />
+    </div>
+  </div>
+
+  <div id="network_button">
+    <h3>Networked My Ass Off</h3>
+
+    <input type="radio" name="radio_network" id="network_attended" value="5">
+    <label for="network_attended">Attended a Networking Meetup or Hack-Nite Event <i>(+5)</i></label>
+    <br>
+    <input type="radio" name="radio_network" id="network_met" value="7">
+    <label for="network_met">Introduced yourself to 3+ new people at Networking Event <i>(+7)</i></label>
+    <br>
+    <input type="radio" name="radio_network" id="network_participated" value="10">
+    <label for="network_participated">Participated at Networking Event (asked questions, hacked, assisted, helped cleanup) <i>(+10)</i></label>
+    <br>
+    <input type="radio" name="radio_network" id="network_organized" value="20">
+    <label for="network_organized">Co-Organized a Networking Event<i>(+20) </i></label>
+    <br>
+    <input type="radio" name="radio_network" id="network_no" value="0" checked="checked">
+    <label for="network_no">Nope</label>
+    <br>
+    <hr />
+  </div>
+
+  <div id="learning_button">
+    <h3>Contributed to the gSchool Learning Experience</h3>
+
+    <input type="radio" name="radio_learning" id="learning_pair" value="1">
+    <label for="learning_pair">Paired <i>(+1)</i></label>
+    <br>
+    <input type="radio" name="radio_learning" id="learning_assist" value="2">
+    <label for="learning_assist">Helped a fellow student figure something out.  (Does not include your Pair) <i>(+2)</i></label>
+    <br>
+    <input type="radio" name="radio_learning" id="learning_lightning" value="3">
+    <label for="learning_lightning">Delivered a Lightning Talk or similar to 5 or more students <i>(+3)</i></label>
+    <br>
+    <input type="radio" name="radio_learning" id="learning_no" value="0" checked="checked">
+    <label for="learning_no">Nope</label>
+    <br>
+    <hr />
+  </div>
+
+  <div id="badass_button">
+    <h3>Wrote Some Totally Badass Code</h3>
+
+    <input type="radio" name="radio_badass" id="badass_github" value="1" checked="checked">
+    <label for="badass_github">Pushed Exercises to GitHub <i>(+1)</i></label>
+    <br>
+    <input type="radio" name="radio_badass" id="badass_github_personal" value="2">
+    <label for="badass_github_personal">Pushed Commits on a Personal Project  <i>(+2)</i></label>
+    <br>
+    <input type="radio" name="radio_badass" id="badass_heroku" value="2">
+    <label for="badass_heroku">Pushed Updates on a Personal Project to Heroku <i>(+2)</i></label>
+    <br>
+    <input type="radio" name="radio_badass" id="badass_heroku_launch" value="15">
+    <label for="badass_heroku_launch">Launched a NEW Personal Project on Heroku <i>(+15)</i></label>
+    <br>
+    <input type="radio" name="radio_badass" id="badass_no" value="0">
+    <label for="badass_no">Nope</label>
+    <br>
+    <hr />
   </div>
 
 
-  <button>Submit</button>
+
+
+
+  <br>
+  <button>Submit</button> <a href="/">Cancel</a>
 </form>
+
