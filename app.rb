@@ -14,25 +14,23 @@ class App < Sinatra::Application
   end
 
   get "/" do
-    sql_string = <<-STRING
-                  SELECT users.id, users.image_url, users.username,
-                    SUM(scores.beverage) AS beer,
-                    SUM(scores.pong) AS pong,
-                    SUM(scores.network) AS network,
-                    SUM(scores.learning) AS learning,
-                    SUM(scores.badass_code) AS code,
-                    SUM(scores.total_score) AS total_score
-                  FROM scores
-                  JOIN users
-                  ON scores.user_id = users.id
-                  GROUP BY users.id
-                  ORDER BY SUM(scores.total_score) DESC
-                  STRING
-    all_scores = @database_connection.sql(sql_string)
+
+    all_scores = run_scores_totals("total_score")
+    beverage_score = run_scores_totals("beverage")
+    pong_score = run_scores_totals("pong")
+    network_score = run_scores_totals("network")
+    learning_score = run_scores_totals("learning")
+    badass_code_score = run_scores_totals("badass_code")
 
     user = @database_connection.sql("SELECT * FROM users WHERE id = #{session[:user_id].to_i}").first if session[:user_id]
 
-    erb :home, locals: {all_scores: all_scores, user: user}
+    erb :home, locals: {all_scores: all_scores,
+                        beverage_score: beverage_score,
+                        pong_score: pong_score,
+                        network_score: network_score,
+                        learning_score: learning_score,
+                        badass_code_score: badass_code_score,
+                        user: user}
   end
 
   get "/scores/new" do

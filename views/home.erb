@@ -1,12 +1,9 @@
 <%if session[:user_id]%>
-  <img src=<%=user["image_url"]%>>
   <div>Logged in as <%=user["username"]%></div>
   <a href="scores/new">Log Activity</a> &nbsp;&nbsp; | &nbsp;&nbsp;
   <a href="logout">Logout</a> &nbsp;&nbsp; | &nbsp;&nbsp;
   <a href="/users/edit">Edit Profile</a>
 
-  <h1></h1>
-  <br><br>
 <%else%>
 
 
@@ -23,15 +20,15 @@
 
 <h3>Point Leaders</h3>
 
-
+<% if all_scores[0] !=nil%>
 <section id="points_leaders">
 <article class="one_sixth"></article>
-<article class="thumb"><b>Overall</b><img src=< %=all_scores[0]["image_url"]%>><br>< %=all_scores[0]["username"]%><br></article>
-<article class="thumb"><b>Beverages</b></article>
-<article class="thumb"><b>Ping Pong</b></article>
-<article class="thumb"><b>Networking</b></article>
-<article class="thumb"><b>Learning</b></article>
-<article class="thumb"><b>Code</b></article>
+<article class="thumb"><b>Overall</b><img src=<%=all_scores[0]["image_url"]%>><br><%=all_scores[0]["username"]%><br></article>
+<article class="thumb"><b>Beverages</b><img src=<%=beverage_score[0]["image_url"]%>><br><%=beverage_score[0]["username"]%><br></article>
+<article class="thumb"><b>Ping Pong</b><img src=<%=pong_score[0]["image_url"]%>><br><%=pong_score[0]["username"]%><br></article>
+<article class="thumb"><b>Networking</b><img src=<%=network_score[0]["image_url"]%>><br><%=network_score[0]["username"]%><br></article>
+<article class="thumb"><b>Learning</b><img src=<%=learning_score[0]["image_url"]%>><br><%=learning_score[0]["username"]%><br></article>
+<article class="thumb"><b>Code</b><img src=<%=badass_code_score[0]["image_url"]%>><br><%=badass_code_score[0]["username"]%><br></article>
 </section>
 <br>
 <br>
@@ -40,6 +37,7 @@
 <br>
 <br>
 <br>
+ <%end%>
 <div id="leaderboard">
 <hr />
 <h3>Leaderboard</h3>

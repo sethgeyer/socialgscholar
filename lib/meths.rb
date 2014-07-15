@@ -56,4 +56,20 @@ def determine_whether_to_create_a_new_score_or_update_an_existing_score(activity
   end
 end
 
-
+def run_scores_totals(order_by_value)
+  sql_string = <<-STRING
+                  SELECT users.id, users.image_url, users.username,
+                    SUM(scores.beverage) AS beer,
+                    SUM(scores.pong) AS pong,
+                    SUM(scores.network) AS network,
+                    SUM(scores.learning) AS learning,
+                    SUM(scores.badass_code) AS code,
+                    SUM(scores.total_score) AS total_score
+                  FROM scores
+                  JOIN users
+                  ON scores.user_id = users.id
+                  GROUP BY users.id
+                  ORDER BY SUM(scores.#{order_by_value}) DESC
+  STRING
+  @database_connection.sql(sql_string)
+end
