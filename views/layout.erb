@@ -1,11 +1,31 @@
-<!DOCTYPE html>
+
+
+<!doctype html>
 <html>
 <head>
-  <title></title>
+  <meta charset="UTF-8">
+
+  <title>Social gScholar</title>
+
+  <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css">
+
+  <link href="style.css" rel="stylesheet" type="text/css" />
+
 </head>
+
 <body>
+
+  <div class="wrapper">
+
+  <nav>
+    <p>The Social gScholar</p>
+  </nav>
+
   <%= flash[:notice] if flash[:notice]%><br>
-<%= yield %>
+  <%= yield %>
+
+</div> <!--END content-->
+
 
 </body>
 </html>

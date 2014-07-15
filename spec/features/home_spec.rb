@@ -29,10 +29,24 @@ feature "homepage" do
     register_and_log_in("Seth")
     # user_logs_in("Seth")
     expect(page).to have_content("Welcome Seth!")
-    expect(page).to have_content("Your Stats")
+    expect(page).to have_content("Logged in as Seth")
 
-
+    expect(page).to have_link("Edit Profile")
   end
+
+
+  scenario "visitor fills in login credentials incorrectly and logs in" do
+    register_and_log_in("Seth")
+    click_on "Logout"
+    fill_in "Username", with: "Sethy"
+    fill_in "Password", with: "123"
+    click_on "Login"
+    expect(page).to have_content("The username and password combination you entered is not valid.  Try again.")
+  end
+
+
+
+
 
   scenario "user logs out" do
     register_and_log_in("Seth")
@@ -54,4 +68,13 @@ feature "homepage" do
     expect(page).to have_button("Submit")
   end
 
+  scenario "logged in user wants to see the points leaders" do
+    register_and_log_in("Stan")
+    make_a_choice_by_pressing_a_radio_button("#badass_button", "Launched a NEW Personal Project on Heroku", Time.now.strftime("%m/%d/%Y"))
+    click_on "Logout"
+    register_and_log_in("Seth")
+    make_a_choice_by_pressing_a_radio_button("#network_button", "Co-Organized a Networking Event", Time.now.strftime("%m/%d/%Y"))
+    expect(page.find("#points_leaders")).to have_content("Seth")
+    expect(page.find("#points_leaders")).to have_content("Stan")
+  end
 end

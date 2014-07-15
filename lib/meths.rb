@@ -1,7 +1,11 @@
 def establish_current_user_and_create_session (username, password)
   current_user = @database_connection.sql("SELECT * FROM users WHERE username= '#{username}' AND password= '#{password}'").first
+  if current_user != nil
   flash[:notice] = "Welcome #{username}!"
   session[:user_id] = current_user['id']
+  else
+  flash[:notice] = "The username and password combination you entered is not valid.  Try again."
+  end
 end
 
 def create_appropriate_error_message(username, password)
@@ -51,3 +55,5 @@ def determine_whether_to_create_a_new_score_or_update_an_existing_score(activity
     @database_connection.sql(create_sql_string)
   end
 end
+
+

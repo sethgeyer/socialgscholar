@@ -15,7 +15,7 @@ class App < Sinatra::Application
 
   get "/" do
     sql_string = <<-STRING
-                  SELECT users.id, users.username,
+                  SELECT users.id, users.image_url, users.username,
                     SUM(scores.beverage) AS beer,
                     SUM(scores.pong) AS pong,
                     SUM(scores.network) AS network,
@@ -29,6 +29,7 @@ class App < Sinatra::Application
                   ORDER BY SUM(scores.total_score) DESC
                   STRING
     all_scores = @database_connection.sql(sql_string)
+
     user = @database_connection.sql("SELECT * FROM users WHERE id = #{session[:user_id].to_i}").first if session[:user_id]
 
     erb :home, locals: {all_scores: all_scores, user: user}
@@ -63,6 +64,30 @@ class App < Sinatra::Application
   get "/users/new" do
     erb :new_user
   end
+
+  get "/users/edit" do
+    if session[:user_id]
+      user = @database_connection.sql("SELECT * FROM users WHERE id=#{session[:user_id].to_i}").first
+      erb :edit_user, locals: {:current_user => user}
+    else
+      redirect "/"
+    end
+  end
+
+  put "/users/put" do
+    new_password = params[:password]
+    new_image_url = params[:image_url]
+    if new_password != ""
+      @database_connection.sql("UPDATE users SET password='#{new_password}', image_url='#{new_image_url}' WHERE id=#{session[:user_id].to_i}").first
+      flash[:notice] = "Your changes have been saved"
+      redirect "/"
+    else
+      flash[:notice] = "You Must Input a Valid Password"
+      user = @database_connection.sql("SELECT * FROM users WHERE id=#{session[:user_id].to_i}").first
+      erb :edit_user, locals: {:current_user => user}
+    end
+  end
+
 
   post "/login" do
     establish_current_user_and_create_session(params[:username], params[:password])

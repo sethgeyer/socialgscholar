@@ -1,7 +1,11 @@
 <%if session[:user_id]%>
-  <img style="width:60px" src=<%=user["image_url"]%>>
+  <img src=<%=user["image_url"]%>>
+  <div>Logged in as <%=user["username"]%></div>
+  <a href="scores/new">Log Activity</a> &nbsp;&nbsp; | &nbsp;&nbsp;
   <a href="logout">Logout</a> &nbsp;&nbsp; | &nbsp;&nbsp;
-  <a href="scores/new">Log Activity</a>
+  <a href="/users/edit">Edit Profile</a>
+
+  <h1></h1>
   <br><br>
 <%else%>
 
@@ -17,41 +21,70 @@
   </form>
 <%end%>
 
-<h3>Ruler of the gSchoolers</h3>
-<thumbnail style="border:1px solid">The King of Ping</thumbnail>
-<thumbnail style="border:1px solid">The Sir of Suds</thumbnail>
-<thumbnail style="border:1px solid">The Network Baron</thumbnail>
-<thumbnail style="border:1px solid">The Earl of Learning</thumbnail>
-<thumbnail style="border:1px solid">The Queen of Code</thumbnail>
+<h3>Point Leaders</h3>
 
 
-
+<section id="points_leaders">
+<article class="one_sixth"></article>
+<article class="thumb"><b>Overall</b><img src=< %=all_scores[0]["image_url"]%>><br>< %=all_scores[0]["username"]%><br></article>
+<article class="thumb"><b>Beverages</b></article>
+<article class="thumb"><b>Ping Pong</b></article>
+<article class="thumb"><b>Networking</b></article>
+<article class="thumb"><b>Learning</b></article>
+<article class="thumb"><b>Code</b></article>
+</section>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <div id="leaderboard">
 <hr />
 <h3>Leaderboard</h3>
 
-<table >
-  <tr>
-    <th> Name </th>
-    <th> Beer </th>
-    <th> Pong </th>
-    <th> Network</th>
-    <th> Learning</th>
-    <th> Code</th>
-    <th> Total</th>
-  </tr>
-<%all_scores.each do |person|%>
-  <tr>
-    <td><%=person["username"]%></td>
-    <td id="beer"><%=person["beer"]%></td>
-    <td id="pong"><%=person["pong"]%></td>
-    <td id="network"><%=person["network"]%></td>
-    <td id="learning"><%=person["learning"]%></td>
-    <td id="badass_code"><%=person["code"]%></td>
-    <td id ="total_score"><%=person["total_score"]%></td>
-  </tr>
-<%end%>
 
-</table>
+
+
+
+  <section class="clearfix">
+    <article style="width:10%">
+      Name
+    </article>
+    <article class="one_sixth">
+      Overall
+    </article>
+    <article class="one_sixth">
+      Beverages
+    </article>
+    <article class="one_sixth">
+      Ping-Pong
+    </article>
+    <article class="one_sixth">
+      Networking
+    </article>
+    <article class="one_sixth">
+      Learning
+    </article>
+    <article class="one_sixth">
+      Code
+    </article>
+  </section><!-- END row -->
+
+
+  <%all_scores.each do |person|%>
+    <section class="clearfix">
+
+      <article style="width:10%"><%=person["username"]%></article>
+      <article class="one_sixth" id ="total_score"><%=person["total_score"]%></article>
+      <article class="one_sixth" id="beer"><%=person["beer"]%></article>
+      <article class="one_sixth" id="pong"><%=person["pong"]%></article>
+      <article class="one_sixth" id="network"><%=person["network"]%></article>
+      <article class="one_sixth" id="learning"><%=person["learning"]%></article>
+      <article class="one_sixth" id="badass_code"><%=person["code"]%></article>
+
+    </section>
+  <%end%>
 
 </div>
