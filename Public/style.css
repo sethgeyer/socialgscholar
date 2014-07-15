@@ -19,13 +19,14 @@ img { width: 60px;}
 }
 
 .thumb {
-    width:10%;
+    /*width:10%;*/
+    width:120px;
     border:1px solid;
     height:100px;
 
 
 }
-
+""
 /* ----- =columns ----- */
 
 .one_half { width:460px; }
