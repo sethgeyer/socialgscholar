@@ -9,3 +9,4 @@ gem "capybara"
 gem "rake"
 gem "pg", "~> 0.17.1"
 gem "launchy"
+gem 'rails_12factor', '~> 0.0.2'
