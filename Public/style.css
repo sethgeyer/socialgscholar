@@ -29,7 +29,8 @@ img { width: 60px;}
 /* ----- =columns ----- */
 
 .one_half { width:460px; }
-.one_sixth { width:10%; text-align: center}
+/*.one_sixth { width:10%; text-align: center} { width:10%; text-align: center}*/
+.one_sixth { width:120px;}
 .one_third {	 width:300px; }
 .two_third {	 width:620px; }
 .one_fourth {	 width:220px; }
