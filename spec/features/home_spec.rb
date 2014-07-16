@@ -62,6 +62,19 @@ feature "homepage" do
     expect(page).to have_link("Log Activity")
   end
 
+
+  scenario "user logs in and sees a link to view detailed scores by individual" do
+    register_and_log_in("Stan")
+    click_on "Log Activity"
+    click_on "Submit"
+    click_on "Logout"
+    register_and_log_in("Seth")
+    click_on "Stan"
+    expect(page).to have_content("Past Activity")
+    expect(page).to have_link("Back to Home")
+    expect(page).to have_content("1")
+  end
+
   scenario "logged in user presses 'Log Activity' link and routes to input form" do
     register_and_log_in("Seth")
     click_on "Log Activity"

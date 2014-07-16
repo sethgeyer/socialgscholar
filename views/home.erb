@@ -111,7 +111,7 @@
     <%end%>
 
     <div class="row" style=<%=highlight%>>
-     <div class="col-lg-1"  style=<%=wide%> ><%=person["username"]%></div>
+     <div class="col-lg-1"  style=<%=wide%> ><a href="/activity/<%=person['id']%>"><%=person["username"]%></a></div>
       <div id ="total_score" class="col-lg-1" style=<%=wide%> ><%=person["total_score"]%></div>
       <div id="beer" class="col-lg-1" style=<%=wide%> ><%=person["beer"]%></div>
       <div id="pong" class="col-lg-1" style=<%=wide%> ><%=person["pong"]%></div>

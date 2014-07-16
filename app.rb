@@ -33,6 +33,14 @@ class App < Sinatra::Application
                         user: user}
   end
 
+
+  get "/activity/:id" do
+    id = params[:id].to_i
+    activity = @database_connection.sql("SELECT * FROM scores WHERE user_id = #{id} ORDER BY activity_date DESC LIMIT 14")
+    erb :user_activity, locals: {activity: activity}
+  end
+
+
   get "/scores/new" do
     if session[:user_id]
       last_three_days = [Time.now.strftime("%m/%d/%Y"), (Time.now - 86400).strftime("%m/%d/%Y"), (Time.now - 86400 - 86400).strftime("%m/%d/%Y")]
