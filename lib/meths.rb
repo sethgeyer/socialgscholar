@@ -57,6 +57,7 @@ def determine_whether_to_create_a_new_score_or_update_an_existing_score(activity
 end
 
 def run_scores_totals(order_by_value)
+  date = (Time.new - (2 * 7 * 24 * 60 * 60)).strftime("%Y-%m-%d")
   sql_string = <<-STRING
                   SELECT users.id, users.image_url, users.username,
                     SUM(scores.beverage) AS beer,
@@ -68,8 +69,10 @@ def run_scores_totals(order_by_value)
                   FROM scores
                   JOIN users
                   ON scores.user_id = users.id
+                  WHERE activity_date > '#{date}'
                   GROUP BY users.id
                   ORDER BY SUM(scores.#{order_by_value}) DESC
+
   STRING
   @database_connection.sql(sql_string)
 end

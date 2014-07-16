@@ -24,20 +24,22 @@ class App < Sinatra::Application
     badass_code_score = run_scores_totals("badass_code")
 
     user = @database_connection.sql("SELECT * FROM users WHERE id = #{session[:user_id].to_i}").first if session[:user_id]
-
+    date_two_weeks_ago = (Time.new - (2 * 7 * 24 * 60 * 60)).strftime("%Y-%m-%d")
     erb :home, locals: {all_scores: all_scores,
                         beverage_score: beverage_score,
                         pong_score: pong_score,
                         network_score: network_score,
                         learning_score: learning_score,
                         badass_code_score: badass_code_score,
-                        user: user}
+                        user: user,
+                        date_two_weeks_ago: date_two_weeks_ago}
   end
 
 
   get "/activity/:id" do
+    date = (Time.new - (2 * 7 * 24 * 60 * 60)).strftime("%Y-%m-%d")
     id = params[:id].to_i
-    activity = @database_connection.sql("SELECT * FROM scores WHERE user_id = #{id} ORDER BY activity_date DESC LIMIT 14")
+    activity = @database_connection.sql("SELECT * FROM scores WHERE user_id = #{id} AND activity_date > '#{date}' ORDER BY activity_date ")
     erb :user_activity, locals: {activity: activity}
   end
 

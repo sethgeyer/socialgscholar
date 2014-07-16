@@ -7,7 +7,7 @@ class AddAScoresTable < ActiveRecord::Migration
         t.integer :network
         t.integer :learning
         t.integer :badass_code
-        t.string  :activity_date
+        t.date  :activity_date
         t.integer :total_score
 
       end

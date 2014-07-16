@@ -1,7 +1,7 @@
 <%wide="width:150px"%>
 <p>Log in, track your day's activity, and see how you stack up against your peers.</p>
 
-<h3>Point Leaders</h3>
+<h3>Point Leaders (as of <%=date_two_weeks_ago%>)</h3>
 <% if all_scores[0] !=nil%>
 <section id="points_leaders">
 <div class="row">
@@ -75,7 +75,7 @@
 
 <div id="leaderboard">
 <hr />
-<h3>Leaderboard</h3>
+<h3>Scoreboard (as of <%=date_two_weeks_ago%>)</h3>
 
   <div class="row" style="background-color:black; color:white">
     <div class="col-lg-1" style=<%=wide%>>
