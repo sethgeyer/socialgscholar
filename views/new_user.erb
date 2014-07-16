@@ -1,12 +1,30 @@
-<h1>Register Here</h1>
+<!DOCTYPE>
+<html>
+<head>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
 
+<% if flash[:notice]%>
+    <div class="alert alert-warning" role="alert">
+      <%= flash[:notice]%>
+    </div>
+<%end%>
+  <h1>Register Here</h1>
 
-<form method="POST" action="/users">
-  <label for="username">Username:</label><br>
-  <input id="username" name="username"><br><br>
-  <label for="password">Password:</label><br>
-  <input id="password" name="password"><br><br>
-  <label for="image_url">Image URL:</label><br>
-  <input id="image_url" name="image_url"><br><br>
-  <button>Submit</button> <a href="/">Cancel</a>
-</form>
+  <form role="form" method="POST" action="/users">
+    <div class="form-group">
+      <label for="username">Username:</label><br>
+      <input id="username"  name="username"><br><br>
+      <label for="password">Password:</label><br>
+      <input id="password"  name="password"><br><br>
+      <label for="image_url">Image URL:</label><br>
+      <input id="image_url"  name="image_url"><br><br>
+      <button class="btn btn-default btn-sm">Submit</button> <a href="/">Cancel</a>
+    </div>
+  </form>
+</div>
+</body>
+
+</html>

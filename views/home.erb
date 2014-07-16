@@ -1,15 +1,16 @@
-
+<%wide="width:150px"%>
+<p>Log in, track your day's activity, and see how you stack up agains your peers.</p>
 
 <h3>Point Leaders</h3>
 <% if all_scores[0] !=nil%>
 <section id="points_leaders">
 <div class="row">
-  <div class="col-xs-1 col-xs-1">
+  <div class="col-lg-1" style=<%=wide%>>
   </div>
 
-  <div class="col-xs-1 col-xs-1">
+  <div class="col-lg-1" style=<%=wide%>>
     <div class="thumbnail">
-      <img src=<%=all_scores[0]["image_url"]%>>
+      <img style="min-height: 115px" src=<%=all_scores[0]["image_url"]%>>
       <div class="caption">
         <h4>Overall</h4>
         <p><%=all_scores[0]["username"]%></p>
@@ -17,9 +18,9 @@
     </div>
   </div>
 
-  <div class="col-xs-1 col-xs-1">
+  <div class="col-lg-1" style=<%=wide%>>
     <div class="thumbnail">
-      <img src=<%=beverage_score[0]["image_url"]%>>
+      <img style="min-height: 115px" src=<%=beverage_score[0]["image_url"]%>>
       <div class="caption">
         <h4>Beverages</h4>
         <p><%=beverage_score[0]["username"]%></p>
@@ -27,18 +28,18 @@
     </div>
   </div>
 
-  <div class="col-xs-1 col-xs-1">
+  <div class="col-lg-1" style=<%=wide%>>
     <div class="thumbnail">
-      <img src=<%=pong_score[0]["image_url"]%>>
+      <img style="min-height: 115px" src=<%=pong_score[0]["image_url"]%>>
       <div class="caption">
         <h4>Ping Pong</h4>
         <p><%=pong_score[0]["username"]%></p>
       </div>
     </div>
   </div>
-  <div class="col-xs-1 col-xs-1">
+  <div class="col-lg-1" style=<%=wide%>>
     <div class="thumbnail">
-      <img src=<%=network_score[0]["image_url"]%>>
+      <img style="min-height: 115px" src=<%=network_score[0]["image_url"]%>>
       <div class="caption">
         <h4>Networking</h4>
         <p><%=network_score[0]["username"]%></p>
@@ -46,9 +47,9 @@
     </div>
   </div>
 
-  <div class="col-xs-1 col-xs-1">
+  <div class="col-lg-1" style=<%=wide%>>
     <div class="thumbnail">
-      <img src=<%=learning_score[0]["image_url"]%>>
+      <img style="min-height: 115px" src=<%=learning_score[0]["image_url"]%>>
       <div class="caption">
         <h4>Learning</h4>
         <p><%=learning_score[0]["username"]%></p>
@@ -56,9 +57,9 @@
     </div>
   </div>
 
-  <div class="col-xs-1 col-xs-1">
+  <div class="col-lg-1" style=<%=wide%>>
     <div class="thumbnail">
-      <img src=<%=badass_code_score[0]["image_url"]%>>
+      <img style="min-height: 115px" src=<%=badass_code_score[0]["image_url"]%>>
       <div class="caption">
         <h4>Code</h4>
         <p><%=badass_code_score[0]["username"]%></p>
@@ -76,40 +77,47 @@
 <hr />
 <h3>Leaderboard</h3>
 
-  <div class="row">
-    <div class="col-xs-1 col-xs-1">
+  <div class="row" style="background-color:black; color:white">
+    <div class="col-lg-1" style=<%=wide%>>
       Name
     </div>
-    <div class="col-xs-1 col-xs-1">
+    <div class="col-lg-1" style=<%=wide%>>
       Overall
     </div>
-    <div class="col-xs-1 col-xs-1">
+    <div class="col-lg-1" style=<%=wide%>>
       Beverages
     </div>
-    <div class="col-xs-1 col-xs-1">
+    <div class="col-lg-1" style=<%=wide%>>
       Ping Pong
     </div>
-    <div class="col-xs-1 col-xs-1">
+    <div class="col-lg-1" style=<%=wide%>>
       Networking
     </div>
-    <div class="col-xs-1 col-xs-1">
+    <div class="col-lg-1" style=<%=wide%>>
       Learning
     </div>
-    <div class="col-xs-1 col-xs-1">
+    <div class="col-lg-1" style=<%=wide%>>
       Code
     </div>
 </div>
 
 
   <%all_scores.each do |person|%>
-   <div class="row">
-      <div class="col-xs-1 col-xs-1"><%=person["username"]%></div>
-      <div class="col-xs-1 col-xs-1" id ="total_score"><%=person["total_score"]%></div>
-      <div class="col-xs-1 col-xs-1" id="beer"><%=person["beer"]%></div>
-      <div class="col-xs-1 col-xs-1" id="pong"><%=person["pong"]%></div>
-      <div class="col-xs-1 col-xs-1" id="network"><%=person["network"]%></div>
-      <div class="col-xs-1 col-xs-1" id="learning"><%=person["learning"]%></div>
-      <div class="col-xs-1 col-xs-1" id="badass_code"><%=person["code"]%></div>
+
+    <%if session[:user_id] == person["id"]%>
+      <%highlight = "background-color:lightsalmon"%>
+    <%else%>
+      <%highlight = "background-color:white;"%>
+    <%end%>
+
+    <div class="row" style=<%=highlight%>>
+     <div class="col-lg-1"  style=<%=wide%> ><%=person["username"]%></div>
+      <div id ="total_score" class="col-lg-1" style=<%=wide%> ><%=person["total_score"]%></div>
+      <div id="beer" class="col-lg-1" style=<%=wide%> ><%=person["beer"]%></div>
+      <div id="pong" class="col-lg-1" style=<%=wide%> ><%=person["pong"]%></div>
+      <div id="network" class="col-lg-1" style=<%=wide%> ><%=person["network"]%></div>
+      <div id="learning" class="col-lg-1" style=<%=wide%> ><%=person["learning"]%></div>
+      <div id="badass_code" class="col-lg-1" style=<%=wide%> ><%=person["code"]%></div>
    </div>
   <%end%>
 

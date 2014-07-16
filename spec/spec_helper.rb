@@ -22,15 +22,15 @@ end
 
 def  register_and_log_in(name)
   visit "/users/new"
-  fill_in "Username", with: "#{name}"
-  fill_in "Password", with: "#{name.downcase}"
+  fill_in "Username:", with: "#{name}"
+  fill_in "Password:", with: "#{name.downcase}"
   fill_in "Image URL", with: "http://photos1.meetupstatic.com/photos/member/1/2/e/highres_145320302.jpeg"
   click_on "Submit"
 end
 
 def user_logs_in(name)
-  fill_in "Username", with: "#{name}"
-  fill_in "Password", with: "#{name.downcase}"
+  fill_in "Username:", with: "#{name}"
+  fill_in "Password:", with: "#{name.downcase}"
   click_on "Login"
 end
 

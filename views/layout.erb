@@ -47,12 +47,12 @@
 
               <li><a href="/users/new">Signup</a></li>
           </ul>
-              <form class="navbar-form navbar-right" method="POST" action="/login">
+              <form class="navbar-form navbar-right" role="form" method="POST" action="/login">
                 <div class="form-group">
                 <label for="username">Username:</label>
-                <input id="username" name="username">
+                <input id="username" class="form-control" name="username">
                 <label for="password">Password:</label>
-                <input id="password" name="password">
+                <input id="password" class="form-control" name="password">
 
                 <button class="btn btn-default btn-sm">Login</button>
                 </div>
@@ -65,7 +65,12 @@
       </div><!-- /.container-fluid -->
     </nav>
 
-  <%= flash[:notice] if flash[:notice]%><br>
+    <% if flash[:notice]%>
+      <div class="alert alert-warning" role="alert">
+        <%= flash[:notice]%>
+      </div>
+    <%end%>
+
   <%= yield %>
 
 </div> <!--END content-->

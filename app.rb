@@ -60,7 +60,7 @@ class App < Sinatra::Application
   end
 
   get "/users/new" do
-    erb :new_user
+    erb :new_user, :layout => false
   end
 
   get "/users/edit" do
