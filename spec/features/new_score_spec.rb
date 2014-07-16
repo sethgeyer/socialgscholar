@@ -5,7 +5,7 @@ feature "New Score Page" do
 
   scenario "visitor does not have access to this page unless logged in" do
     visit "scores/new"
-    expect(page).to have_content("Leaderboard")
+    expect(page).to have_content("Scoreboard")
   end
 
   scenario "logged in user sees a Activity Form on the page" do
@@ -53,7 +53,7 @@ feature "New Score Page" do
     register_and_log_in("Seth")
     make_a_choice_by_pressing_a_radio_button("#bev_button", "Drank Too Much and Made a Jack-Ass of Myself", @date)
     section = page.find("#leaderboard")
-    expect(section).to have_content("Leaderboard")
+    expect(section).to have_content("Scoreboard")
   end
 
   scenario "user fills in the form and sees their updated score on the homepage" do
@@ -153,7 +153,7 @@ feature "New Score Page" do
     register_and_log_in("Seth")
     visit "/scores/new"
     click_on "Cancel"
-    expect(page).to have_content("Leaderboard")
+    expect(page).to have_content("Scoreboard")
   end
 
 

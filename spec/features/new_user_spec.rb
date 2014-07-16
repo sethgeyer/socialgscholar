@@ -50,7 +50,7 @@ feature "registration page" do
   scenario "visitor decides not to register" do
     visit "/users/new"
     click_on "Cancel"
-    expect(page).to have_content("Leaderboard")
+    expect(page).to have_content("Scoreboard")
   end
 
 

@@ -2,7 +2,7 @@ feature "edit user page" do
 
   scenario "visitor tries to access the edit user page" do
     visit "/users/edit"
-    expect(page).to have_content("Leaderboard")
+    expect(page).to have_content("Scoreboard")
   end
 
   scenario "user wishes to edit their profile" do
@@ -19,7 +19,7 @@ feature "edit user page" do
     register_and_log_in("Seth")
     visit "/users/edit"
     click_on "Cancel"
-    expect(page).to have_content("Leaderboard")
+    expect(page).to have_content("Scoreboard")
   end
 
   scenario "user changes their password" do

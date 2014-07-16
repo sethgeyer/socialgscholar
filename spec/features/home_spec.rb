@@ -16,7 +16,7 @@ feature "homepage" do
   end
 
   scenario "visitor sees 'All Stats' summary" do
-    expect(page).to have_content("Leaderboard")
+    expect(page).to have_content("Scoreboard")
     expect(page).not_to have_content("Your Stats")
   end
 
