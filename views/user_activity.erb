@@ -1,31 +1,31 @@
-<a href = "/">Back to Home</a>
+<a href="/" xmlns="http://www.w3.org/1999/html">Back to Home</a>
 <h1>Past Activity (last 14 days)</h1>
 
 
-<div >
-  <div class="row" style="background-color:black; color:white">
-    <div class="col-lg-2">Date</div>
-    <div class="col-lg-1">Overall</div>
-    <div class="col-lg-1">Beverage</div>
-    <div class="col-lg-1">Pong</div>
-    <div class="col-lg-1">Network</div>
-    <div class="col-lg-1">Learning</div>
-    <div class="col-lg-1">Code</div>
-  </div>
-
+<table class="table table-bordered table-hover">
+  <thead class="row" style="background-color:black; color:white">
+    <th class="col-lg-2">Date</th>
+    <th class="col-lg-1">Overall</th>
+    <th class="col-lg-1">Beverage</th>
+    <th class="col-lg-1">Pong</th>
+    <th class="col-lg-1">Network</th>
+    <th class="col-lg-1">Learning</th>
+    <th class="col-lg-1">Code</th>
+  </thead>
+  <tbody>
   <%activity.each do |day|%>
-  <div class="row">
+  <tr>
 
 
-    <div class="col-lg-2"><%=day["activity_date"]%></div>
-    <div class="col-lg-1"><%=day["total_score"]%></div>
-    <div class="col-lg-1"><%=day["beverage"]%></div>
-    <div class="col-lg-1"><%=day["pong"]%></div>
-    <div class="col-lg-1"><%=day["network"]%></div>
-    <div class="col-lg-1"><%=day["learning"]%></div>
-    <div class="col-lg-1"><%=day["badass_code"]%></div>
+    <td class="col-lg-2"><%=day["activity_date"]%></td>
+    <td class="col-lg-1"><%=day["total_score"]%></td>
+    <td class="col-lg-1"><%=day["beverage"]%></td>
+    <td class="col-lg-1"><%=day["pong"]%></td>
+    <td class="col-lg-1"><%=day["network"]%></td>
+    <td class="col-lg-1"><%=day["learning"]%></td>
+    <td class="col-lg-1"><%=day["badass_code"]%></td>
 
-  </div>
+  </tr>
     <%end%>
-
-</div>
+  </tbody>
+</table>

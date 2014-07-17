@@ -1,75 +1,78 @@
+<div container="fluid">
+
 <%wide="width:150px"%>
 <p>Log in, track your day's activity, and see how you stack up against your peers.</p>
 
 <h3>Point Leaders (as of <%=date_two_weeks_ago%>)</h3>
 <% if all_scores[0] !=nil%>
-<section id="points_leaders">
-<div class="row">
-  <div class="col-md-1" style=<%=wide%>>
-  </div>
+<table id="points_leaders" class="table">
 
-  <div class="col-md-1" style=<%=wide%>>
-    <div class="thumbnail">
-      <img style="min-height: 115px" src=<%=all_scores[0]["image_url"]%>>
+<tr>
+  <td class="col-md-1" style=<%=wide%>>
+  </td>
+
+  <td class="col-md-1" style=<%=wide%>>
+    <div class="thumbnail" style="height:240px">
+      <img style="height: 115px" src=<%=all_scores[0]["image_url"]%>>
       <div class="caption">
         <h4>Overall</h4>
         <p><%=all_scores[0]["username"]%></p>
       </div>
     </div>
-  </div>
+  </td>
 
-  <div class="col-md-1" style=<%=wide%>>
-    <div class="thumbnail">
-      <img style="min-height: 115px" src=<%=beverage_score[0]["image_url"]%>>
+  <td class="col-md-1" style=<%=wide%>>
+    <div class="thumbnail" style="height:240px">
+      <img style="height: 115px" src=<%=beverage_score[0]["image_url"]%>>
       <div class="caption">
         <h4>Beverages</h4>
         <p><%=beverage_score[0]["username"]%></p>
       </div>
     </div>
-  </div>
+  </td>
 
-  <div class="col-md-1" style=<%=wide%>>
-    <div class="thumbnail">
-      <img style="min-height: 115px" src=<%=pong_score[0]["image_url"]%>>
+  <td class="col-md-1" style=<%=wide%>>
+    <div class="thumbnail" style="height:240px">
+      <img style="height: 115px" src=<%=pong_score[0]["image_url"]%>>
       <div class="caption">
         <h4>Ping Pong</h4>
         <p><%=pong_score[0]["username"]%></p>
       </div>
     </div>
-  </div>
-  <div class="col-md-1" style=<%=wide%>>
-    <div class="thumbnail">
-      <img style="min-height: 115px" src=<%=network_score[0]["image_url"]%>>
+  </td>
+  <td class="col-md-1" style=<%=wide%>>
+    <div class="thumbnail" style="height:240px">
+      <img style="height: 115px" src=<%=network_score[0]["image_url"]%>>
       <div class="caption">
         <h4>Networking</h4>
         <p><%=network_score[0]["username"]%></p>
       </div>
     </div>
-  </div>
+  </td>
 
-  <div class="col-md-1" style=<%=wide%>>
-    <div class="thumbnail">
-      <img style="min-height: 115px" src=<%=learning_score[0]["image_url"]%>>
+  <td class="col-md-1" style=<%=wide%>>
+    <div class="thumbnail" style="height:240px">
+      <img style="height: 115px" src=<%=learning_score[0]["image_url"]%>>
       <div class="caption">
         <h4>Learning</h4>
         <p><%=learning_score[0]["username"]%></p>
       </div>
     </div>
-  </div>
+  </td>
 
-  <div class="col-md-1" style=<%=wide%>>
-    <div class="thumbnail">
-      <img style="min-height: 115px" src=<%=badass_code_score[0]["image_url"]%>>
+  <td class="col-md-1" style=<%=wide%>>
+    <div class="thumbnail" style="height:240px">
+      <img style="height: 115px" src=<%=badass_code_score[0]["image_url"]%>>
       <div class="caption">
         <h4>Code</h4>
         <p><%=badass_code_score[0]["username"]%></p>
       </div>
     </div>
-  </div>
-</div>
+  </td>
+</tr>
 
 
-</section>
+</table>
 <%end%>
 
 
@@ -77,48 +80,35 @@
 <hr />
 <h3>Scoreboard (as of <%=date_two_weeks_ago%>)</h3>
 
-  <div class="row" style="background-color:black; color:white">
-    <div class="col-md-1" style=<%=wide%>>
-      Name
-    </div>
-    <div class="col-md-1" style=<%=wide%>>
-      Overall
-    </div>
-    <div class="col-md-1" style=<%=wide%>>
-      Beverages
-    </div>
-    <div class="col-md-1" style=<%=wide%>>
-      Ping Pong
-    </div>
-    <div class="col-md-1" style=<%=wide%>>
-      Networking
-    </div>
-    <div class="col-md-1" style=<%=wide%>>
-      Learning
-    </div>
-    <div class="col-md-1" style=<%=wide%>>
-      Code
-    </div>
+  <table class="table table-bordered table-hover">
+    <thead style="background-color:black; color:white">
+      <td style=<%=wide%>>Name</td>
+      <td style=<%=wide%>>Overall</td>
+      <td style=<%=wide%>>Beverages</td>
+      <td style=<%=wide%>>Ping Pong</td>
+      <td style=<%=wide%>>Networking</td>
+      <td style=<%=wide%>>Learning</td>
+      <td style=<%=wide%>>Code</td>
+    </thead>
+    <tbody>
+      <%all_scores.each do |person|%>
+        <%if session[:user_id] == person["id"]%>
+          <%highlight = "background-color:lightsalmon"%>
+        <%else%>
+          <%highlight = "background-color:white;"%>
+        <%end%>
+        <tr style=<%=highlight%>>
+          <td style=<%=wide%> ><a href="/activity/<%=person['id']%>"><%=person["username"]%></a></td>
+          <td id ="total_score" style=<%=wide%> ><%=person["total_score"]%></td>
+          <td id="beer" style=<%=wide%> ><%=person["beer"]%></td>
+          <td id="pong" style=<%=wide%> ><%=person["pong"]%></td>
+          <td id="network" style=<%=wide%> ><%=person["network"]%></td>
+          <td id="learning" style=<%=wide%> ><%=person["learning"]%></td>
+          <td id="badass_code" style=<%=wide%> ><%=person["code"]%></td>
+        </tr>
+      <%end%>
+    </tbody>
+  </table>
+</div>
 </div>
 
-
-  <%all_scores.each do |person|%>
-
-    <%if session[:user_id] == person["id"]%>
-      <%highlight = "background-color:lightsalmon"%>
-    <%else%>
-      <%highlight = "background-color:white;"%>
-    <%end%>
-
-    <div class="row" style=<%=highlight%>>
-     <div class="col-md-1"  style=<%=wide%> ><a href="/activity/<%=person['id']%>"><%=person["username"]%></a></div>
-      <div id ="total_score" class="col-md-1" style=<%=wide%> ><%=person["total_score"]%></div>
-      <div id="beer" class="col-md-1" style=<%=wide%> ><%=person["beer"]%></div>
-      <div id="pong" class="col-md-1" style=<%=wide%> ><%=person["pong"]%></div>
-      <div id="network" class="col-md-1" style=<%=wide%> ><%=person["network"]%></div>
-      <div id="learning" class="col-md-1" style=<%=wide%> ><%=person["learning"]%></div>
-      <div id="badass_code" class="col-md-1" style=<%=wide%> ><%=person["code"]%></div>
-   </div>
-  <%end%>
-
-</div>
