@@ -3,18 +3,6 @@ def establish_current_user_and_create_session (username, password)
   if current_user != nil
   flash[:notice] = "Welcome #{username}!"
   session[:user_id] = current_user['id']
-  create_sql_string = <<-TEXT
-                            INSERT INTO scores (user_id, activity_date, beverage, pong, network, learning, badass_code, total_score)
-                            VALUES (#{session[:user_id].to_i},
-                                   '#{Time.now.strftime("%m/%d/%Y")}',
-                                    0,
-                                    0,
-                                    0,
-                                    0,
-                                    0,
-                                    0)
-    TEXT
-    @database_connection.sql(create_sql_string)
   else
   flash[:notice] = "The username and password combination you entered is not valid.  Try again."
   end
@@ -33,6 +21,18 @@ end
 def add_user_to_database(username, password, image_url=nil)
   @database_connection.sql("INSERT INTO users (username, password, image_url) VALUES ('#{username}', '#{password}', '#{image_url}')")
   establish_current_user_and_create_session(params[:username], params[:password])
+  create_sql_string = <<-TEXT
+                            INSERT INTO scores (user_id, activity_date, beverage, pong, network, learning, badass_code, total_score)
+                            VALUES (#{session[:user_id].to_i},
+                                   '#{Time.now.strftime("%m/%d/%Y")}',
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0)
+  TEXT
+  @database_connection.sql(create_sql_string)
   redirect "/"
 rescue
   flash[:notice] = "Username is already taken"
