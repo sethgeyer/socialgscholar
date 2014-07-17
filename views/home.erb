@@ -5,10 +5,10 @@
 <% if all_scores[0] !=nil%>
 <section id="points_leaders">
 <div class="row">
-  <div class="col-lg-1" style=<%=wide%>>
+  <div class="col-md-1" style=<%=wide%>>
   </div>
 
-  <div class="col-lg-1" style=<%=wide%>>
+  <div class="col-md-1" style=<%=wide%>>
     <div class="thumbnail">
       <img style="min-height: 115px" src=<%=all_scores[0]["image_url"]%>>
       <div class="caption">
@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <div class="col-lg-1" style=<%=wide%>>
+  <div class="col-md-1" style=<%=wide%>>
     <div class="thumbnail">
       <img style="min-height: 115px" src=<%=beverage_score[0]["image_url"]%>>
       <div class="caption">
@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <div class="col-lg-1" style=<%=wide%>>
+  <div class="col-md-1" style=<%=wide%>>
     <div class="thumbnail">
       <img style="min-height: 115px" src=<%=pong_score[0]["image_url"]%>>
       <div class="caption">
@@ -37,7 +37,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-1" style=<%=wide%>>
+  <div class="col-md-1" style=<%=wide%>>
     <div class="thumbnail">
       <img style="min-height: 115px" src=<%=network_score[0]["image_url"]%>>
       <div class="caption">
@@ -47,7 +47,7 @@
     </div>
   </div>
 
-  <div class="col-lg-1" style=<%=wide%>>
+  <div class="col-md-1" style=<%=wide%>>
     <div class="thumbnail">
       <img style="min-height: 115px" src=<%=learning_score[0]["image_url"]%>>
       <div class="caption">
@@ -57,7 +57,7 @@
     </div>
   </div>
 
-  <div class="col-lg-1" style=<%=wide%>>
+  <div class="col-md-1" style=<%=wide%>>
     <div class="thumbnail">
       <img style="min-height: 115px" src=<%=badass_code_score[0]["image_url"]%>>
       <div class="caption">
@@ -78,25 +78,25 @@
 <h3>Scoreboard (as of <%=date_two_weeks_ago%>)</h3>
 
   <div class="row" style="background-color:black; color:white">
-    <div class="col-lg-1" style=<%=wide%>>
+    <div class="col-md-1" style=<%=wide%>>
       Name
     </div>
-    <div class="col-lg-1" style=<%=wide%>>
+    <div class="col-md-1" style=<%=wide%>>
       Overall
     </div>
-    <div class="col-lg-1" style=<%=wide%>>
+    <div class="col-md-1" style=<%=wide%>>
       Beverages
     </div>
-    <div class="col-lg-1" style=<%=wide%>>
+    <div class="col-md-1" style=<%=wide%>>
       Ping Pong
     </div>
-    <div class="col-lg-1" style=<%=wide%>>
+    <div class="col-md-1" style=<%=wide%>>
       Networking
     </div>
-    <div class="col-lg-1" style=<%=wide%>>
+    <div class="col-md-1" style=<%=wide%>>
       Learning
     </div>
-    <div class="col-lg-1" style=<%=wide%>>
+    <div class="col-md-1" style=<%=wide%>>
       Code
     </div>
 </div>
@@ -111,13 +111,13 @@
     <%end%>
 
     <div class="row" style=<%=highlight%>>
-     <div class="col-lg-1"  style=<%=wide%> ><a href="/activity/<%=person['id']%>"><%=person["username"]%></a></div>
-      <div id ="total_score" class="col-lg-1" style=<%=wide%> ><%=person["total_score"]%></div>
-      <div id="beer" class="col-lg-1" style=<%=wide%> ><%=person["beer"]%></div>
-      <div id="pong" class="col-lg-1" style=<%=wide%> ><%=person["pong"]%></div>
-      <div id="network" class="col-lg-1" style=<%=wide%> ><%=person["network"]%></div>
-      <div id="learning" class="col-lg-1" style=<%=wide%> ><%=person["learning"]%></div>
-      <div id="badass_code" class="col-lg-1" style=<%=wide%> ><%=person["code"]%></div>
+     <div class="col-md-1"  style=<%=wide%> ><a href="/activity/<%=person['id']%>"><%=person["username"]%></a></div>
+      <div id ="total_score" class="col-md-1" style=<%=wide%> ><%=person["total_score"]%></div>
+      <div id="beer" class="col-md-1" style=<%=wide%> ><%=person["beer"]%></div>
+      <div id="pong" class="col-md-1" style=<%=wide%> ><%=person["pong"]%></div>
+      <div id="network" class="col-md-1" style=<%=wide%> ><%=person["network"]%></div>
+      <div id="learning" class="col-md-1" style=<%=wide%> ><%=person["learning"]%></div>
+      <div id="badass_code" class="col-md-1" style=<%=wide%> ><%=person["code"]%></div>
    </div>
   <%end%>
 
