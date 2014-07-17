@@ -77,6 +77,7 @@ class App < Sinatra::Application
   get "/users/edit" do
     if session[:user_id]
       user = @database_connection.sql("SELECT * FROM users WHERE id=#{session[:user_id].to_i}").first
+
       erb :edit_user, locals: {:current_user => user}
     else
       redirect "/"
@@ -100,6 +101,7 @@ class App < Sinatra::Application
 
   post "/login" do
     establish_current_user_and_create_session(params[:username], params[:password])
+
     redirect "/"
   end
 

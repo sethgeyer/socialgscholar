@@ -54,4 +54,35 @@ feature "registration page" do
   end
 
 
+  scenario "visitor registers and see themselves in the Scoreboard" do
+    visit '/users/new'
+    fill_in "Username", with: "Seth"
+    fill_in "Password", with: "seth"
+    # fill_in "password", with: ""
+    click_on "Submit"
+    expect(page).to have_link("Seth")
+
+  end
+
+  scenario "visitor registers incorrectly and cant see themselves in the Scoreboard" do
+    visit '/users/new'
+    fill_in "Username", with: "Seth"
+    click_on "Submit"
+    expect(page).not_to have_link("Seth")
+  end
+
+  scenario "visitor registers incorrectly and cant see themselves in the Scoreboard" do
+    visit '/users/new'
+    fill_in "Username", with: "Seth"
+    fill_in "Password", with: "seth"
+    click_on "Submit"
+    click_on "Logout"
+    visit "/users/new"
+    fill_in "Username", with: "Seth"
+    fill_in "Password", with: "Seth"
+    click_on "Submit"
+    expect(page).not_to have_link("Seth")
+  end
+
+
 end

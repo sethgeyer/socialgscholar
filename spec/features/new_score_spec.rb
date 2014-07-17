@@ -153,7 +153,7 @@ feature "New Score Page" do
     register_and_log_in("Seth")
     visit "/scores/new"
     click_on "Cancel"
-    expect(page).to have_content("Scoreboard")
+    expect(page).to have_link("Seth")
   end
 
 
