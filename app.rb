@@ -1,8 +1,8 @@
 require "sinatra"
 require "active_record"
-#require "./lib/database_connection"
+require_relative "lib/users"
+require_relative "lib/scores"
 require "rack-flash"
-require "./lib/meths"
 require "gschool_database_connection"
 
 class App < Sinatra::Application
@@ -11,20 +11,21 @@ class App < Sinatra::Application
 
   def initialize
     super
+    @users = Users.new(GschoolDatabaseConnection::DatabaseConnection.establish(ENV["RACK_ENV"]))
+    @scores = Scores.new(GschoolDatabaseConnection::DatabaseConnection.establish(ENV["RACK_ENV"]))
+
     @database_connection = GschoolDatabaseConnection::DatabaseConnection.establish(ENV["RACK_ENV"])
   end
 
   get "/" do
-
-    all_scores = run_scores_totals("total_score")
-    beverage_score = run_scores_totals("beverage")
-    pong_score = run_scores_totals("pong")
-    network_score = run_scores_totals("network")
-    learning_score = run_scores_totals("learning")
-    badass_code_score = run_scores_totals("badass_code")
-
-    user = @database_connection.sql("SELECT * FROM users WHERE id = #{session[:user_id].to_i}").first if session[:user_id]
     date_two_weeks_ago = (Time.new - (2 * 7 * 24 * 60 * 60)).strftime("%Y-%m-%d")
+    all_scores = @scores.run_scores_totals("total_score", date_two_weeks_ago)
+    beverage_score = @scores.run_scores_totals("beverage", date_two_weeks_ago)
+    pong_score = @scores.run_scores_totals("pong", date_two_weeks_ago)
+    network_score = @scores.run_scores_totals("network", date_two_weeks_ago)
+    learning_score = @scores.run_scores_totals("learning", date_two_weeks_ago)
+    badass_code_score = @scores.run_scores_totals("badass_code", date_two_weeks_ago)
+    user = @users.find_by_id(session[:user_id]) if session[:user_id]
     erb :home, locals: {all_scores: all_scores,
                         beverage_score: beverage_score,
                         pong_score: pong_score,
@@ -35,18 +36,17 @@ class App < Sinatra::Application
                         date_two_weeks_ago: date_two_weeks_ago}
   end
 
-
   get "/activity/:id" do
-    date = (Time.new - (2 * 7 * 24 * 60 * 60)).strftime("%Y-%m-%d")
+    date_two_weeks_ago = (Time.new - (2 * 7 * 24 * 60 * 60)).strftime("%Y-%m-%d")
     id = params[:id].to_i
-    activity = @database_connection.sql("SELECT * FROM scores WHERE user_id = #{id} AND activity_date > '#{date}' ORDER BY activity_date ")
+    activity = @scores.get_the_last_two_weeks_of_scores(id, date_two_weeks_ago)
     erb :user_activity, locals: {activity: activity}
   end
 
-
   get "/scores/new" do
     if session[:user_id]
-      last_three_days = [Time.now.strftime("%m/%d/%Y"), (Time.now - 86400).strftime("%m/%d/%Y"), (Time.now - 86400 - 86400).strftime("%m/%d/%Y")]
+      today = Time.now
+      last_three_days = [today.strftime("%m/%d/%Y"), (today - 86400).strftime("%m/%d/%Y"), (today - 86400 - 86400).strftime("%m/%d/%Y")]
       erb :new_score, :locals => {dates: last_three_days}
     else
       redirect "/"
@@ -54,6 +54,7 @@ class App < Sinatra::Application
   end
 
   post "/scores" do
+    id = session[:user_id].to_i
     activity_date = params[:activity_date]
     beverage_score = params[:radio_beverage].to_i
     pong_score = params[:radio_pong].to_i
@@ -61,7 +62,7 @@ class App < Sinatra::Application
     learning_score = params[:radio_learning].to_i
     badass_code_score = params[:radio_badass].to_i
     total_score = beverage_score + pong_score + network_score + learning_score + badass_code_score
-    determine_whether_to_create_a_new_score_or_update_an_existing_score(activity_date, beverage_score, pong_score, network_score, learning_score, badass_code_score, total_score)
+    @scores.determine_whether_to_create_a_new_score_or_update_an_existing_score(id, activity_date, beverage_score, pong_score, network_score, learning_score, badass_code_score, total_score)
     redirect "/"
   end
 
@@ -74,10 +75,27 @@ class App < Sinatra::Application
     erb :new_user, :layout => false
   end
 
+  post "/users" do
+    if params[:username] == "" || params[:password] == ""
+      flash[:notice] = create_appropriate_error_message(params[:username], params[:password])
+      redirect '/users/new'
+    else
+      begin
+        @users.add_to_dbase(params[:username], params[:password], params[:image_url])
+        current_user = @users.find_in_dbase(params[:username], params[:password])
+        create_session_and_flash_message(current_user)
+        @scores.create_initial_score(current_user['id'].to_i)
+        redirect "/"
+      rescue
+        flash[:notice] = "Username is already taken"
+        redirect '/users/new'
+      end
+    end
+  end
+
   get "/users/edit" do
     if session[:user_id]
-      user = @database_connection.sql("SELECT * FROM users WHERE id=#{session[:user_id].to_i}").first
-
+      user = @users.find_by_id(session[:user_id])
       erb :edit_user, locals: {:current_user => user}
     else
       redirect "/"
@@ -88,29 +106,40 @@ class App < Sinatra::Application
     new_password = params[:password]
     new_image_url = params[:image_url]
     if new_password != ""
-      @database_connection.sql("UPDATE users SET password='#{new_password}', image_url='#{new_image_url}' WHERE id=#{session[:user_id].to_i}").first
+      @users.update_profile_info(new_password, new_image_url, session[:user_id].to_i)
       flash[:notice] = "Your changes have been saved"
       redirect "/"
     else
       flash[:notice] = "You Must Input a Valid Password"
-      user = @database_connection.sql("SELECT * FROM users WHERE id=#{session[:user_id].to_i}").first
+      user = @users.find_by_id(session[:user_id])
       erb :edit_user, locals: {:current_user => user}
     end
   end
 
-
   post "/login" do
-    establish_current_user_and_create_session(params[:username], params[:password])
-
+    current_user = @users.find_in_dbase(params[:username], params[:password])
+    create_session_and_flash_message(current_user)
     redirect "/"
   end
 
-  post "/users" do
-    if params[:username] == "" || params[:password] == ""
-      flash[:notice] = create_appropriate_error_message(params[:username], params[:password])
-      redirect '/users/new'
+  def create_session_and_flash_message(current_user)
+    if current_user != nil
+      flash[:notice] = "Welcome #{params[:username]}!"
+      session[:user_id] = current_user['id']
     else
-      add_user_to_database(params[:username], params[:password], params[:image_url])
+      flash[:notice] = "The username and password combination you entered is not valid.  Try again."
     end
   end
+
+  def create_appropriate_error_message(username, password) #1
+    if username == "" && password == ""
+      "Password and Username is required"
+    elsif username == ""
+      "Username is required"
+    elsif password == ""
+      "Password is required"
+    end
+  end
+
+
 end
