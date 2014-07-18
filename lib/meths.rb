@@ -18,8 +18,9 @@ def create_appropriate_error_message(username, password)
   end
 end
 
-def add_user_to_database(username, password, image_url=nil)
-  @database_connection.sql("INSERT INTO users (username, password, image_url) VALUES ('#{username}', '#{password}', '#{image_url}')")
+def add_user_to_database(username, password, image_url)
+  image = "http://www.digitaltonto.com/wp-content/uploads/2013/03/Young-Bill-Gates-e1365202494393.png" if image_url == ""
+  @database_connection.sql("INSERT INTO users (username, password, image_url) VALUES ('#{username}', '#{password}', '#{image}')")
   establish_current_user_and_create_session(params[:username], params[:password])
   create_sql_string = <<-TEXT
                             INSERT INTO scores (user_id, activity_date, beverage, pong, network, learning, badass_code, total_score)
