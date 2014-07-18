@@ -1,34 +1,22 @@
-# Sinatra with SQL CRUD
+# Social gScholar
 
-We're building the next hot fish favoriting site; fish.ly. Google, Apple, IBM, and anyone who's anyone is entering this market; we have to move fast. For our MVP (Minimum Viable Product) the site needs to let users register, create fish, and favorite other people's fish. If this is shipped by the end of this week, we close a $20m round at a $300m valuation; just enough to feed our families!
+Social gScholar is a social web app developed to track and rank the daily networking, learning, and coding
+activities of the gSchool students enrolled in the Denver Jun 2014 class. It was developed using Ruby, built
+on Sinatra, and designed using Twitter Bootstrap primarily.
 
-Since someone decided that more engineers means more throughput, I've made the executive decision to have you all work in pairs and produce the same application 13 times. Of course, as your engineering manager, I know this isn't true, but hey who am I to disagree with the people writing the checks; you all have a job, so be thankful. When it's all said and done I'll tell 'em we all worked hard to produce a single version of their vision, but we all know Google's going to beat us anyways. I heard they have a fish favoriting watch or something.
+gSchool students register on the site and then log their daily activities using a pre-defined list of relevant
+and related in-class and out-of-class activities.  Each activity has a related score.  Daily scores are tabulated
+and students are ranked based on their combined scores over the trailing two weeks.
 
-Anyways, back to the application!
+## Dev Details
+The Social gScholar project was thrown together relatively quickly and intended for fun and internal use only.  While
+it was fully developed with implementation/user-interface testing in mind, there is not a lick of unit testing involved.
+As well, there are some obviously glaring best practices absent in its design.  (They are obvious when looking at the code.)
+What you see in the code, is what has been learned and applied as of the 6 week mark of gSchool.  It is my intent to
+remain 'pencils-down' on this app rather than further improving the code as my base of knowledge improves.
 
-# Exercise
+- Seth Geyer
+  Friday, July 18, 2014
 
-This web application will walk through a site complete with registration, login, fish creation, user interaction. You'll even be able to delete other users! Exciting!
 
-Follow the mockups and stories to get started. The mockups only go through to user sign up and registration. Anything after that is up to you to decide how it looks, since we fired that guy because we didn't need him, obviously, and besides we all know engineers are pretty much designers anyways. Please add your tracker to your students submission.
 
-## Getting started
-
-1. `bundle install`
-1. Import `stories.csv` into tracker.
-1. Create a heroku app. `$ heroku create`
-1. `$ cp config/database.yml.example config/database.yml`
-1. `$ rake db:create`
-1. `$ rake db:migrate`
-1. `$ RACK_ENV=test rake db:migrate`
-1. Run rspec to check that it worked
-1. Start a story
-1. *Write a test!*
-1. See the test fail for the _reason you expect_
-1. Write implementation
-1. Commit and push to GitHub
-1. Push to Heroku
-  * run migrations on heroku if necessary!
-1. Finish and deliver story
-1. Check heroku and bask in the glory of real software
-1. Rinse and Repeat
